@@ -32,7 +32,7 @@ class Timbus {
         curl_close($ch);
         return $re;
     }
-    public ThongTinXe($id) {
+    public function ThongTinXe($id) {
         $API = "http://timbus.vn/Engine/Business/Search/action.ashx";
         $param = 'act=fleetdetail&fid='.$id;
         $re = CURL($API, $param);
@@ -50,7 +50,7 @@ class Timbus {
             ];
         return json_encode($data);
     }
-    public Route($Lng, $Lat) {
+    public function Route($Lng, $Lat) {
         $API = "http://timbus.vn/Engine/Business/Route/action.ashx";
         $param = 'act=geo2add&lng='.$Lng.'&lat='.$Lat;
         $re = CURL($API, $param);
@@ -59,7 +59,7 @@ class Timbus {
         $addr = explode(", ", $add);
         return json_encode(['Lng'=>$addr[0],'Lat'=>$addr[1]]);
     }
-    public SearchBus($query) {
+    public function  SearchBus($query) {
         $API = "http://timbus.vn/Engine/Business/Search/action.ashx";
         $param = 'act=searchfull&typ=1&key='.urlencode($query);
         $re = CURL($API, $param);
@@ -73,7 +73,7 @@ class Timbus {
         $jsond = ['Total'=>$Total,'Data'=>$data];
         return json_encode($jsond);
     }
-    public SearchBusStop($query) {
+    public function  SearchBusStop($query) {
         $API = "http://timbus.vn/Engine/Business/Search/action.ashx";
         $param = 'act=searchfull&typ=2&key='.urlencode($query);
         $re = CURL($API,$param);
@@ -93,7 +93,7 @@ class Timbus {
         $jsond = ['Total'=>$Total,'Data'=>$data];
         return json_encode($jsond);
     }
-    public Timing($stateID) {
+    public function Timing($stateID) {
         $API = "http://timbus.vn/Engine/Business/Vehicle/action.ashx";
         $param = 'act=partremained&State=true&StationID='.$stateID.'&FleetOver=';
         $re = CURL($API, $param);
