@@ -80,9 +80,15 @@ class Timbus {
         $Reponse = json_decode($re);
         $Total= $Reponse->dt->Total;
         $data = [];
+        
         $countdata = count($Reponse->dt->Data);
         for($i = 0; $i< $countdata; $i++) {
-            $data[$i] = ['ID'=>$Reponse->dt->Data[$i]->ObjectID,'Street'=>$Reponse->dt->Data[$i]->Street,'Name'=>$Reponse->dt->Data[$i]->Name,'Xe'=>$Reponse->dt->Data[$i]->FleetOver,'Lng'=>$Reponse->dt->Data[$i]->Geo->Lng,'Lat'=>$Reponse->dt->Data[$i]->Geo->Lat];
+            $Lng = $Reponse->dt->Data[$i]->Geo->Lng;
+            $Lat = $Reponse->dt->Data[$i]->Geo->Lat;
+            $map = json_decode(Route($Lng, $Lat));
+            $Lnge = $map['Lng'];
+            $Late = $map['Lat'];
+            $data[$i] = ['ID'=>$Reponse->dt->Data[$i]->ObjectID,'Street'=>$Reponse->dt->Data[$i]->Street,'Name'=>$Reponse->dt->Data[$i]->Name,'Xe'=>$Reponse->dt->Data[$i]->FleetOver,'map'=>'https://maps.googleapis.com/maps/api/staticmap?center='.$Late.','.$Lnge.'&markers=size:mid%7Ccolor:red%7C'.$Late.','.$Lnge.'&zoom=16&size=400x400&maptype=roadmap&key=AIzaSyBukG4uq4dqnkPkh-Xot4oHsVqEDZNQL4o'];
         }
         $jsond = ['Total'=>$Total,'Data'=>$data];
         return json_encode($jsond);
